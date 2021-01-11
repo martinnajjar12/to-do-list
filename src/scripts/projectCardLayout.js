@@ -1,4 +1,6 @@
 function projectCard(title) {
+  const column = document.createElement('div');
+  column.className = 'col-6 mt-4';
   const card = document.createElement('div');
   const cardHeader = document.createElement('div');
   const cardTitle = document.createElement('h5');
@@ -15,8 +17,9 @@ function projectCard(title) {
   cardHeader.appendChild(cardTitle);
 
   card.append(cardHeader, todoList);
+  column.appendChild(card);
 
-  return card;
+  return column;
 }
 
 module.exports = projectCard;
