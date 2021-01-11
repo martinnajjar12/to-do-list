@@ -1,4 +1,4 @@
-const { format, compareAsc } = require('date-fns');
+const { format } = require('date-fns');
 
 class Todo {
   constructor(title, description, date, priority, notes) {

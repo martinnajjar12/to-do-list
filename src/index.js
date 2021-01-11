@@ -3,7 +3,10 @@ const todo = require('./scripts/todoClass');
 const project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
+const todoForm = require('./scripts/newTodoForm');
+
 let projects = [];
+
 const container = document.querySelector('.container');
 container.appendChild(projectForm);
 
@@ -45,5 +48,7 @@ function restoreLocal() {
     });
   }
 }
+
+console.log(new Date());
 
 restoreLocal();
