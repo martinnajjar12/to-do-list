@@ -76,19 +76,6 @@ const todoProject = document.querySelector('#todoProjectSelection');
 const todoNotes = document.querySelector('#todoNotes');
 const createTodoBtn = document.querySelector('#createTodoBtn');
 
-const renderTodos = (project) => {
-  const todoList = document.querySelector(
-    `#${project.name.replace(/ |\/|_|'/g, '-')}Todo`
-  );
-  todoList.innerHTML = '';
-  project.todos.forEach((todo) => {
-    const li = document.createElement('li');
-    li.innerHTML = `<input type='checkbox' class='me-3'><span>${todo.title}</span>`;
-    todoList.appendChild(li);
-  });
-  saveLocal();
-};
-
 const createTodo = () => {
   const newTodo = new todo(
     todoTitle.value,
@@ -104,6 +91,36 @@ const createTodo = () => {
 };
 
 createTodoBtn.addEventListener('click', createTodo);
+
+// Render Todo List
+let checkboxId = 0;
+
+const renderTodos = (project) => {
+  const todoList = document.querySelector(
+    `#${project.name.replace(/ |\/|_|'/g, '-')}Todo`
+  );
+  todoList.innerHTML = '';
+  project.todos.forEach((todo) => {
+    const li = document.createElement('li');
+    checkboxId++;
+    li.innerHTML = `<input type='checkbox' id='checkbox${checkboxId}' class='me-3'><span id='todo${checkboxId}'>${todo.title}</span>`;
+    todoList.appendChild(li);
+  });
+  saveLocal();
+};
+
+for (let i = 1; i <= checkboxId; i++) {
+  const checkbox = document.querySelector(`#checkbox${i}`);
+  const span = document.querySelector(`#todo${i}`);
+
+  checkbox.addEventListener('click', () => {
+    if (checkbox.checked) {
+      span.style.textDecoration = 'line-through';
+    } else {
+      span.style.textDecoration = 'none';
+    }
+  })
+}
 
 // Misc
 const resetRow = () => {

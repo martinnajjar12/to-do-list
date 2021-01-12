@@ -18,8 +18,15 @@ body {
   max-width: 800px;
 }
 
+ul {
+  /* padding: 0; */
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
 li {
   list-style: none;
+  padding: 5px 0;
 }
 
 .modal-bg {
