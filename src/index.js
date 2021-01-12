@@ -76,6 +76,8 @@ const todoProject = document.querySelector('#todoProjectSelection');
 const todoNotes = document.querySelector('#todoNotes');
 const createTodoBtn = document.querySelector('#createTodoBtn');
 
+let checkboxId = 0;
+
 const createTodo = () => {
   const newTodo = new todo(
     todoTitle.value,
@@ -86,6 +88,7 @@ const createTodo = () => {
   );
   projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
   saveLocal();
+  checkboxId = 0;
   renderTodos(projects[projectNameArray.indexOf(todoProject.value)]);
   todoContModal.classList.remove('modal-bg-active');
 };
@@ -93,21 +96,19 @@ const createTodo = () => {
 createTodoBtn.addEventListener('click', createTodo);
 
 // Render Todo List
-var checkboxId = 0;
 
 const renderTodos = (project) => {
-  const todoList = document.querySelector(
-    `#${project.name.replace(/ |\/|_|'/g, '-')}Todo`
-  );
+  const projectName = project.name.replace(/ |\/|_|'/g, '-');
+  const todoList = document.querySelector(`#${projectName}Todo`);
   todoList.innerHTML = '';
   project.todos.forEach((todo) => {
     const li = document.createElement('li');
     checkboxId++;
-    li.innerHTML = `<input type='checkbox' id='checkbox${checkboxId}' class='me-3'><span id='todo${checkboxId}'>${todo.title}</span>`;
+    li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span id='span${projectName}${checkboxId}'>${todo.title}</span>`;
     todoList.appendChild(li);
   });
   saveLocal();
-  finishTodo();
+  finishTodo(projectName);
 };
 
 // Misc
@@ -128,6 +129,7 @@ function restoreLocal() {
   } else {
     resetRow();
     projects.forEach((project) => {
+      checkboxId = 0;
       const newProject = projectCard(project.name);
       row.appendChild(newProject);
       renderTodos(project);
@@ -143,17 +145,16 @@ if (projects != null) {
   });
 }
 
-function finishTodo() {
+function finishTodo(projectName) {
   for (let i = 1; i <= checkboxId; i++) {
-    const checkbox = document.querySelector(`#checkbox${i}`);
-    const span = document.querySelector(`#todo${i}`);
-
+    const checkbox = document.querySelector(`#${projectName}${i}`);
+    const span = document.querySelector(`#span${projectName}${i}`);
     checkbox.addEventListener('click', () => {
       if (checkbox.checked) {
         span.style.textDecoration = 'line-through';
       } else {
         span.style.textDecoration = 'none';
       }
-    })
+    });
   }
 }
