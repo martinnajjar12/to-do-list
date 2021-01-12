@@ -131,7 +131,9 @@ function restoreLocal() {
 }
 
 restoreLocal();
-
-projects.forEach((project) => {
-  projectNameArray.push(project.name);
-});
+// localStorage.clear();
+if (projects != null) {
+  projects.forEach((project) => {
+    projectNameArray.push(project.name);
+  });
+}

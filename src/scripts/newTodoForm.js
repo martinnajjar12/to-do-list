@@ -56,11 +56,13 @@ function todoForm() {
   button.setAttribute('type', 'button');
 
   const projects = JSON.parse(localStorage.getItem('projects'));
-  projects.forEach((project) => {
-    const proj = document.createElement('option');
-    proj.text = project.name;
-    projectSelection.add(proj);
-  });
+  if (projects != null) {
+    projects.forEach((project) => {
+      const proj = document.createElement('option');
+      proj.text = project.name;
+      projectSelection.add(proj);
+    });
+  }
   projectSelection.className = 'form-label w-75 mx-auto d-block';
   projectSelection.setAttribute('id', 'todoProjectSelection');
 
