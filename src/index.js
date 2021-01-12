@@ -4,6 +4,7 @@ const project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
 const todoForm = require('./scripts/newTodoForm');
+const editTodo = require('./scripts/editTodo');
 
 let projects = [];
 const projectNameArray = [];
@@ -24,12 +25,15 @@ todoModal.textContent = 'Create To Do';
 container.append(projectModal, todoModal);
 container.appendChild(projectForm);
 container.appendChild(todoForm);
+container.appendChild(editTodo);
 
 // Project Modal
 const closeProj = document.querySelector('#closeProj');
 const closeTodo = document.querySelector('#closeTodo');
+const editCloseTodo = document.querySelector('#editCloseTodo');
 const projModal = document.querySelector('.project-modal');
 const todoContModal = document.querySelector('.todo-modal');
+const editModalDiv = document.querySelector('.edit-todo-modal');
 const modalBg = document.querySelector('.modal-bg');
 
 projectModal.addEventListener('click', () => {
@@ -47,6 +51,10 @@ closeProj.addEventListener('click', () => {
 closeTodo.addEventListener('click', () => {
   todoContModal.classList.remove('modal-bg-active');
 });
+
+editCloseTodo.addEventListener('click', () =>
+  editModalDiv.classList.remove('modal-bg-active')
+);
 
 // Project Form
 const projectName = document.querySelector('#projectName');
@@ -104,13 +112,15 @@ const renderTodos = (project) => {
   project.todos.forEach((todo) => {
     const li = document.createElement('li');
     checkboxId++;
-    console.log(todo.finished);
     if (todo.finished) {
       li.innerHTML = `
         <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
     } else {
       li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span id='span${projectName}${checkboxId}'>${todo.title}</span>`;
     }
+    li.addEventListener('click', () => {
+      editModalDiv.classList.add('modal-bg-active');
+    });
     todoList.appendChild(li);
     finishTodo(projectName, todo);
   });

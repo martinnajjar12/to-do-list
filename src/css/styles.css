@@ -19,7 +19,6 @@ body {
 }
 
 ul {
-  /* padding: 0; */
   margin: 10px 0;
   padding-left: 20px;
 }
@@ -27,6 +26,7 @@ ul {
 li {
   list-style: none;
   padding: 5px 0;
+  cursor: pointer;
 }
 
 .modal-bg {
@@ -52,7 +52,7 @@ li {
 .modal-main {
   background-color: white;
   width: 30%;
-  height: 40%;
+  height: 60%;
   border-radius: 5px;
   z-index: 1000;
   position: relative;
