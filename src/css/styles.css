@@ -17,3 +17,51 @@ body {
 .container {
   max-width: 800px;
 }
+
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.modal-bg-active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-main {
+  background-color: white;
+  width: 30%;
+  height: 40%;
+  border-radius: 5px;
+  z-index: 1000;
+  position: relative;
+}
+
+.modal-main form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.modal-main form h5 {
+  font-size: 1.2em;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

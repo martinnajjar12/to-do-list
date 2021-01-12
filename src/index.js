@@ -4,15 +4,41 @@ const project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
 const todoForm = require('./scripts/newTodoForm');
-const { DOCUMENT_NODE } = require('./scripts/newProjectForm');
 
 let projects = [];
 const projectNameArray = [];
 
+// Container
 const container = document.querySelector('.container');
+const projectModal = document.createElement('button');
+const todoModal = document.createElement('button');
+
+projectModal.setAttribute('type', 'button');
+projectModal.className = 'project-modal';
+projectModal.textContent = 'Create Project';
+
+todoModal.setAttribute('type', 'button');
+todoModal.className = 'todo-modal';
+todoModal.textContent = 'Create To Do';
+
+container.append(projectModal);
 container.appendChild(projectForm);
 container.appendChild(todoForm);
 
+// Project Modal
+const icon = document.querySelector('.close');
+const modalBg = document.querySelector('.modal-bg');
+
+projectModal.addEventListener('click', () => {
+  modalBg.classList.add('modal-bg-active');
+})
+
+icon.addEventListener('click', () => {
+  console.log(icon);
+  modalBg.classList.remove('modal-bg-active');
+})
+
+// Project Form
 const projectName = document.querySelector('#projectName');
 const createProjectBtn = document.querySelector('#createProjectBtn');
 const row = document.createElement('div');
@@ -27,6 +53,12 @@ const createProject = (name) => {
   saveLocal();
 };
 
+createProjectBtn.addEventListener('click', () => {
+  createProject(projectName.value);
+  modalBg.classList.remove('modal-bg-active');
+});
+
+// Todo Form
 const todoTitle = document.querySelector('#todoTitle');
 const todoDesc = document.querySelector('#todoDesc');
 const todoDate = document.querySelector('#todoDate');
@@ -44,16 +76,14 @@ const createTodo = () => {
     todoNotes.value
   );
   projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
+  saveLocal();
 };
-
-createProjectBtn.addEventListener('click', () => {
-  createProject(projectName.value);
-});
 
 createTodoBtn.addEventListener('click', () => {
   createTodo();
 });
 
+// Misc
 const resetRow = () => {
   const row = document.querySelector('.row');
   row.innerHTML = '';

@@ -1,10 +1,15 @@
 function projectForm() {
+  const modalBg = document.createElement('div');
+  const modalMain = document.createElement('div');
   const form = document.createElement('form');
   const name = document.createElement('input');
   const heading = document.createElement('h5');
   const button = document.createElement('button');
+  const close = document.createElement('i');
+  const div = document.createElement('div');
 
   heading.textContent = 'New Project';
+  heading.className = 'form-label w-75 mx-auto d-block';
 
   name.className = 'form-label w-75 mx-auto d-block';
   name.setAttribute('id', 'projectName');
@@ -17,7 +22,18 @@ function projectForm() {
 
   form.append(heading, name, button);
 
-  return form;
+  // Modal
+  modalBg.className = 'modal-bg';
+  modalMain.className = 'modal-main';
+
+  close.className = 'fas fa-times';
+  div.className = 'close';
+  div.appendChild(close);
+
+  modalMain.append(div, form);
+  modalBg.appendChild(modalMain);
+
+  return modalBg;
 }
 
 module.exports = projectForm();
