@@ -58,7 +58,6 @@ container.appendChild(row);
 const createProject = (name) => {
   const newProject = new project(name);
   projects.push(newProject);
-  console.log(projects);
   row.appendChild(projectCard(newProject.name));
   saveLocal();
   modalBg.classList.remove('modal-bg-active');
@@ -101,6 +100,7 @@ const createTodo = () => {
   projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
   saveLocal();
   renderTodos(projects[projectNameArray.indexOf(todoProject.value)]);
+  todoContModal.classList.remove('modal-bg-active');
 };
 
 createTodoBtn.addEventListener('click', createTodo);
