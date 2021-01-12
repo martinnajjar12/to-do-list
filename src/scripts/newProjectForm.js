@@ -6,12 +6,12 @@ function projectForm() {
 
   heading.textContent = 'New Project';
 
-  name.className = 'form-label w-75 mx-auto d-block'
+  name.className = 'form-label w-75 mx-auto d-block';
   name.setAttribute('id', 'projectName');
   name.setAttribute('type', 'text');
 
   button.textContent = 'Create Project';
-  button.className = 'btn btn-primary mx-auto d-block'
+  button.className = 'btn btn-primary mx-auto d-block';
   button.setAttribute('id', 'createBtn');
   button.setAttribute('type', 'button');
 

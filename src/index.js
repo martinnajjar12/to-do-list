@@ -8,6 +8,7 @@ const todoForm = require('./scripts/newTodoForm');
 let projects = [];
 
 const container = document.querySelector('.container');
+container.appendChild(projectForm);
 container.appendChild(todoForm);
 
 const projectName = document.querySelector('#projectName');

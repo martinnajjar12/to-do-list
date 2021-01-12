@@ -1,4 +1,4 @@
-const { format } = require('date-fns');
+const { format, lastDayOfDecade } = require('date-fns');
 
 function todoForm() {
   const form = document.createElement('form');
@@ -6,6 +6,7 @@ function todoForm() {
   const desc = document.createElement('input');
   const date = document.createElement('input');
   const priority = document.createElement('select');
+  const projectSelection = document.createElement('select');
   const notes = document.createElement('input');
   const heading = document.createElement('h5');
   const button = document.createElement('button');
@@ -31,10 +32,10 @@ function todoForm() {
   options.forEach((option, index) => {
     const op = document.createElement('option');
 
-    op.classList = colors[index]
+    op.classList = colors[index];
     op.text = option;
     priority.add(op);
-  })
+  });
   priority.className = 'form-label w-75 mx-auto d-block';
 
   notes.className = 'form-label w-75 mx-auto d-block';
@@ -42,12 +43,29 @@ function todoForm() {
   notes.setAttribute('type', 'text');
   notes.setAttribute('placeholder', 'Notes');
 
-  button.textContent = 'Create Project';
+  button.textContent = 'Create Todo';
   button.className = 'btn btn-primary mx-auto d-block';
   button.setAttribute('id', 'createBtn');
   button.setAttribute('type', 'button');
 
-  form.append(heading, title, desc, date, priority, notes, button);
+  const projects = JSON.parse(localStorage.getItem('projects'));
+  projects.forEach((project) => {
+    const proj = document.createElement('option');
+    proj.text = project.name;
+    projectSelection.add(proj);
+  });
+  projectSelection.className = 'form-label w-75 mx-auto d-block';
+
+  form.append(
+    heading,
+    title,
+    desc,
+    date,
+    priority,
+    notes,
+    projectSelection,
+    button
+  );
 
   return form;
 }
