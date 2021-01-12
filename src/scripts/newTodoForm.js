@@ -1,4 +1,7 @@
-const { format, lastDayOfDecade } = require('date-fns');
+const {
+  format,
+  lastDayOfDecade
+} = require('date-fns');
 
 function todoForm() {
   const form = document.createElement('form');
@@ -10,8 +13,13 @@ function todoForm() {
   const notes = document.createElement('input');
   const heading = document.createElement('h5');
   const button = document.createElement('button');
+  const modalBg = document.createElement('div');
+  const modalMain = document.createElement('div');
+  const close = document.createElement('i');
+  const div = document.createElement('div');
 
   heading.textContent = 'New To Do';
+  heading.className = 'form-label w-75 mx-auto d-block';
 
   title.className = 'form-label w-75 mx-auto d-block';
   title.setAttribute('id', 'todoTitle');
@@ -70,7 +78,19 @@ function todoForm() {
     button
   );
 
-  return form;
+  // Modal
+  modalBg.className = 'modal-bg todo-modal';
+  modalMain.className = 'modal-main';
+
+  close.className = 'fas fa-times';
+  div.className = 'close';
+  div.setAttribute('id', 'closeTodo')
+  div.appendChild(close);
+
+  modalMain.append(div, form);
+  modalBg.appendChild(modalMain);
+
+  return modalBg;
 }
 
 module.exports = todoForm();

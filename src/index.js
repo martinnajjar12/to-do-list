@@ -14,28 +14,38 @@ const projectModal = document.createElement('button');
 const todoModal = document.createElement('button');
 
 projectModal.setAttribute('type', 'button');
-projectModal.className = 'project-modal';
+projectModal.className = 'project-modal-btn';
 projectModal.textContent = 'Create Project';
 
 todoModal.setAttribute('type', 'button');
-todoModal.className = 'todo-modal';
+todoModal.className = 'todo-modal-btn';
 todoModal.textContent = 'Create To Do';
 
-container.append(projectModal);
+container.append(projectModal, todoModal);
 container.appendChild(projectForm);
 container.appendChild(todoForm);
 
 // Project Modal
-const icon = document.querySelector('.close');
+const closeProj = document.querySelector('#closeProj');
+const closeTodo = document.querySelector('#closeTodo');
+const projModal = document.querySelector('.project-modal');
+const todoContModal = document.querySelector('.todo-modal');
 const modalBg = document.querySelector('.modal-bg');
 
 projectModal.addEventListener('click', () => {
-  modalBg.classList.add('modal-bg-active');
+  projModal.classList.add('modal-bg-active');
 })
 
-icon.addEventListener('click', () => {
-  console.log(icon);
-  modalBg.classList.remove('modal-bg-active');
+todoModal.addEventListener('click', () => {
+  todoContModal.classList.add('modal-bg-active');
+})
+
+closeProj.addEventListener('click', () => {
+  projModal.classList.remove('modal-bg-active');
+})
+
+closeTodo.addEventListener('click', () => {
+  todoContModal.classList.remove('modal-bg-active');
 })
 
 // Project Form

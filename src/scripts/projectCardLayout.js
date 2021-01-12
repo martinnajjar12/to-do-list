@@ -5,6 +5,7 @@ function projectCard(title) {
   const cardHeader = document.createElement('div');
   const cardTitle = document.createElement('h5');
   const todoList = document.createElement('ul');
+    
 
   card.className = 'card';
   card.style.width = '18rem';

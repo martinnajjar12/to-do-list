@@ -23,11 +23,12 @@ function projectForm() {
   form.append(heading, name, button);
 
   // Modal
-  modalBg.className = 'modal-bg';
+  modalBg.className = 'modal-bg project-modal';
   modalMain.className = 'modal-main';
 
   close.className = 'fas fa-times';
   div.className = 'close';
+  div.setAttribute('id', 'closeProj');
   div.appendChild(close);
 
   modalMain.append(div, form);
