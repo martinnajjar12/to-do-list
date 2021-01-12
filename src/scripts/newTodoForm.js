@@ -1,7 +1,4 @@
-const {
-  format,
-  lastDayOfDecade
-} = require('date-fns');
+const { format } = require('date-fns');
 
 function todoForm() {
   const form = document.createElement('form');
@@ -84,7 +81,7 @@ function todoForm() {
 
   close.className = 'fas fa-times';
   div.className = 'close';
-  div.setAttribute('id', 'closeTodo')
+  div.setAttribute('id', 'closeTodo');
   div.appendChild(close);
 
   modalMain.append(div, form);

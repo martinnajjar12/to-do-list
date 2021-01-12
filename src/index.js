@@ -34,19 +34,19 @@ const modalBg = document.querySelector('.modal-bg');
 
 projectModal.addEventListener('click', () => {
   projModal.classList.add('modal-bg-active');
-})
+});
 
 todoModal.addEventListener('click', () => {
   todoContModal.classList.add('modal-bg-active');
-})
+});
 
 closeProj.addEventListener('click', () => {
   projModal.classList.remove('modal-bg-active');
-})
+});
 
 closeTodo.addEventListener('click', () => {
   todoContModal.classList.remove('modal-bg-active');
-})
+});
 
 // Project Form
 const projectName = document.querySelector('#projectName');
@@ -77,6 +77,19 @@ const todoProject = document.querySelector('#todoProjectSelection');
 const todoNotes = document.querySelector('#todoNotes');
 const createTodoBtn = document.querySelector('#createTodoBtn');
 
+const renderTodos = (project) => {
+  const todoList = document.querySelector(
+    `#${project.name.replace(/ |\/|_/g, '-')}Todo`
+  );
+  todoList.innerHTML = '';
+  project.todos.forEach((todo) => {
+    const li = document.createElement('li');
+    li.textContent = todo.title;
+    todoList.appendChild(li);
+  });
+  saveLocal();
+};
+
 const createTodo = () => {
   const newTodo = new todo(
     todoTitle.value,
@@ -87,11 +100,10 @@ const createTodo = () => {
   );
   projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
   saveLocal();
+  renderTodos(projects[projectNameArray.indexOf(todoProject.value)]);
 };
 
-createTodoBtn.addEventListener('click', () => {
-  createTodo();
-});
+createTodoBtn.addEventListener('click', createTodo);
 
 // Misc
 const resetRow = () => {
@@ -113,11 +125,13 @@ function restoreLocal() {
     projects.forEach((project) => {
       const newProject = projectCard(project.name);
       row.appendChild(newProject);
+      renderTodos(project);
     });
   }
 }
 
 restoreLocal();
+
 projects.forEach((project) => {
   projectNameArray.push(project.name);
 });
