@@ -65,6 +65,7 @@ const createProject = (name) => {
 
 createProjectBtn.addEventListener('click', () => {
   createProject(projectName.value);
+  restoreLocal();
 });
 
 // Todo Form
@@ -96,7 +97,6 @@ const createTodo = () => {
 createTodoBtn.addEventListener('click', createTodo);
 
 // Render Todo List
-
 const renderTodos = (project) => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
   const todoList = document.querySelector(`#${projectName}Todo`);
@@ -104,11 +104,16 @@ const renderTodos = (project) => {
   project.todos.forEach((todo) => {
     const li = document.createElement('li');
     checkboxId++;
-    li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span id='span${projectName}${checkboxId}'>${todo.title}</span>`;
+    console.log(todo.finished);
+    if (todo.finished) {
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title}</span>`;
+    } else {
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span id='span${projectName}${checkboxId}'>${todo.title}</span>`;
+    }
     todoList.appendChild(li);
+    finishTodo(projectName, todo);
   });
   saveLocal();
-  finishTodo(projectName);
 };
 
 // Misc
@@ -145,16 +150,19 @@ if (projects != null) {
   });
 }
 
-function finishTodo(projectName) {
+function finishTodo(projectName, todo) {
   for (let i = 1; i <= checkboxId; i++) {
     const checkbox = document.querySelector(`#${projectName}${i}`);
     const span = document.querySelector(`#span${projectName}${i}`);
     checkbox.addEventListener('click', () => {
       if (checkbox.checked) {
+        todo.finished = true;
         span.style.textDecoration = 'line-through';
       } else {
+        todo.finished = false;
         span.style.textDecoration = 'none';
       }
+      saveLocal();
     });
   }
 }
