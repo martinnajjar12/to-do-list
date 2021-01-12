@@ -18,6 +18,10 @@ body {
   max-width: 800px;
 }
 
+li {
+  list-style: none;
+}
+
 .modal-bg {
   position: fixed;
   top: 0;

@@ -83,7 +83,7 @@ const renderTodos = (project) => {
   todoList.innerHTML = '';
   project.todos.forEach((todo) => {
     const li = document.createElement('li');
-    li.textContent = todo.title;
+    li.innerHTML = `<input type='checkbox' class='me-3'><span>${todo.title}</span>`;
     todoList.appendChild(li);
   });
   saveLocal();
@@ -131,7 +131,7 @@ function restoreLocal() {
 }
 
 restoreLocal();
-// localStorage.clear();
+
 if (projects != null) {
   projects.forEach((project) => {
     projectNameArray.push(project.name);
