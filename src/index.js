@@ -93,7 +93,7 @@ const createTodo = () => {
 createTodoBtn.addEventListener('click', createTodo);
 
 // Render Todo List
-let checkboxId = 0;
+var checkboxId = 0;
 
 const renderTodos = (project) => {
   const todoList = document.querySelector(
@@ -107,20 +107,8 @@ const renderTodos = (project) => {
     todoList.appendChild(li);
   });
   saveLocal();
+  finishTodo();
 };
-
-for (let i = 1; i <= checkboxId; i++) {
-  const checkbox = document.querySelector(`#checkbox${i}`);
-  const span = document.querySelector(`#todo${i}`);
-
-  checkbox.addEventListener('click', () => {
-    if (checkbox.checked) {
-      span.style.textDecoration = 'line-through';
-    } else {
-      span.style.textDecoration = 'none';
-    }
-  })
-}
 
 // Misc
 const resetRow = () => {
@@ -153,4 +141,19 @@ if (projects != null) {
   projects.forEach((project) => {
     projectNameArray.push(project.name);
   });
+}
+
+function finishTodo() {
+  for (let i = 1; i <= checkboxId; i++) {
+    const checkbox = document.querySelector(`#checkbox${i}`);
+    const span = document.querySelector(`#todo${i}`);
+
+    checkbox.addEventListener('click', () => {
+      if (checkbox.checked) {
+        span.style.textDecoration = 'line-through';
+      } else {
+        span.style.textDecoration = 'none';
+      }
+    })
+  }
 }
