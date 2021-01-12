@@ -14,11 +14,11 @@ const projectModal = document.createElement('button');
 const todoModal = document.createElement('button');
 
 projectModal.setAttribute('type', 'button');
-projectModal.className = 'project-modal-btn';
+projectModal.className = 'project-modal-btn btn btn-primary mt-3 me-3';
 projectModal.textContent = 'Create Project';
 
 todoModal.setAttribute('type', 'button');
-todoModal.className = 'todo-modal-btn';
+todoModal.className = 'todo-modal-btn btn btn-primary mt-3';
 todoModal.textContent = 'Create To Do';
 
 container.append(projectModal, todoModal);
@@ -106,7 +106,8 @@ const renderTodos = (project) => {
     checkboxId++;
     console.log(todo.finished);
     if (todo.finished) {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title}</span>`;
+      li.innerHTML = `
+        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
     } else {
       li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span id='span${projectName}${checkboxId}'>${todo.title}</span>`;
     }
