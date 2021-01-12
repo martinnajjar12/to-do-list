@@ -61,11 +61,11 @@ const createProject = (name) => {
   console.log(projects);
   row.appendChild(projectCard(newProject.name));
   saveLocal();
+  modalBg.classList.remove('modal-bg-active');
 };
 
 createProjectBtn.addEventListener('click', () => {
   createProject(projectName.value);
-  modalBg.classList.remove('modal-bg-active');
 });
 
 // Todo Form
@@ -79,7 +79,7 @@ const createTodoBtn = document.querySelector('#createTodoBtn');
 
 const renderTodos = (project) => {
   const todoList = document.querySelector(
-    `#${project.name.replace(/ |\/|_/g, '-')}Todo`
+    `#${project.name.replace(/ |\/|_|'/g, '-')}Todo`
   );
   todoList.innerHTML = '';
   project.todos.forEach((todo) => {

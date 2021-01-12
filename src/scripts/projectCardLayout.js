@@ -12,7 +12,7 @@ function projectCard(title) {
   cardHeader.className = 'card-header';
 
   todoList.className = 'todos';
-  const todoId = `${title.replace(/ |\/|_/g, '-')}Todo`;
+  const todoId = `${title.replace(/ |\/|_|'/g, '-')}Todo`;
   todoList.setAttribute('id', todoId);
 
   cardTitle.textContent = title;
