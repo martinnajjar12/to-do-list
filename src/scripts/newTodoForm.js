@@ -1,3 +1,5 @@
+const { format } = require('date-fns');
+
 function todoForm() {
   const form = document.createElement('form');
   const title = document.createElement('input');
@@ -22,12 +24,14 @@ function todoForm() {
 
   date.className = 'form-label w-75 mx-auto d-block';
   date.setAttribute('type', 'date');
-  date.setAttribute('min', new Date());
+  date.setAttribute('min', format(new Date(), 'yyyy-MM-dd'));
 
   const options = ['Low', 'Medium', 'High'];
-  options.forEach((option) => {
+  const colors = ['green', 'orange', 'red'];
+  options.forEach((option, index) => {
     const op = document.createElement('option');
 
+    op.classList = colors[index]
     op.text = option;
     priority.add(op);
   })

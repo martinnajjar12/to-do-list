@@ -1,3 +1,15 @@
 body {
   background-color: #dadada;
 }
+
+.green {
+  color: green;
+}
+
+.orange {
+  color: orangered;
+}
+
+.red {
+  color: red;
+}
