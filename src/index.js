@@ -4,15 +4,17 @@ const project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
 const todoForm = require('./scripts/newTodoForm');
+const { DOCUMENT_NODE } = require('./scripts/newProjectForm');
 
 let projects = [];
+const projectNameArray = [];
 
 const container = document.querySelector('.container');
 container.appendChild(projectForm);
 container.appendChild(todoForm);
 
 const projectName = document.querySelector('#projectName');
-const createBtn = document.querySelector('#createBtn');
+const createProjectBtn = document.querySelector('#createProjectBtn');
 const row = document.createElement('div');
 row.className = 'row';
 container.appendChild(row);
@@ -25,7 +27,32 @@ const createProject = (name) => {
   saveLocal();
 };
 
-createBtn.addEventListener('click', () => createProject(projectName.value));
+const todoTitle = document.querySelector('#todoTitle');
+const todoDesc = document.querySelector('#todoDesc');
+const todoDate = document.querySelector('#todoDate');
+const todoPriority = document.querySelector('#todoPriority');
+const todoProject = document.querySelector('#todoProjectSelection');
+const todoNotes = document.querySelector('#todoNotes');
+const createTodoBtn = document.querySelector('#createTodoBtn');
+
+const createTodo = () => {
+  const newTodo = new todo(
+    todoTitle.value,
+    todoDesc.value,
+    todoDate.value,
+    todoPriority.value,
+    todoNotes.value
+  );
+  projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
+};
+
+createProjectBtn.addEventListener('click', () => {
+  createProject(projectName.value);
+});
+
+createTodoBtn.addEventListener('click', () => {
+  createTodo();
+});
 
 const resetRow = () => {
   const row = document.querySelector('.row');
@@ -50,6 +77,7 @@ function restoreLocal() {
   }
 }
 
-console.log(new Date());
-
 restoreLocal();
+projects.forEach((project) => {
+  projectNameArray.push(project.name);
+});

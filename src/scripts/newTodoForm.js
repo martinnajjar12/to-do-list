@@ -25,6 +25,7 @@ function todoForm() {
 
   date.className = 'form-label w-75 mx-auto d-block';
   date.setAttribute('type', 'date');
+  date.setAttribute('id', 'todoDate');
   date.setAttribute('min', format(new Date(), 'yyyy-MM-dd'));
 
   const options = ['Low', 'Medium', 'High'];
@@ -37,6 +38,7 @@ function todoForm() {
     priority.add(op);
   });
   priority.className = 'form-label w-75 mx-auto d-block';
+  priority.setAttribute('id', 'todoPriority');
 
   notes.className = 'form-label w-75 mx-auto d-block';
   notes.setAttribute('id', 'todoNotes');
@@ -45,7 +47,7 @@ function todoForm() {
 
   button.textContent = 'Create Todo';
   button.className = 'btn btn-primary mx-auto d-block';
-  button.setAttribute('id', 'createBtn');
+  button.setAttribute('id', 'createTodoBtn');
   button.setAttribute('type', 'button');
 
   const projects = JSON.parse(localStorage.getItem('projects'));
@@ -55,6 +57,7 @@ function todoForm() {
     projectSelection.add(proj);
   });
   projectSelection.className = 'form-label w-75 mx-auto d-block';
+  projectSelection.setAttribute('id', 'todoProjectSelection');
 
   form.append(
     heading,

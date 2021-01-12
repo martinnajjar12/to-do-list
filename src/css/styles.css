@@ -13,3 +13,7 @@ body {
 .red {
   color: red;
 }
+
+.container {
+  max-width: 800px;
+}

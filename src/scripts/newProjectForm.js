@@ -12,7 +12,7 @@ function projectForm() {
 
   button.textContent = 'Create Project';
   button.className = 'btn btn-primary mx-auto d-block';
-  button.setAttribute('id', 'createBtn');
+  button.setAttribute('id', 'createProjectBtn');
   button.setAttribute('type', 'button');
 
   form.append(heading, name, button);
