@@ -41,7 +41,7 @@ function editTodo() {
     op.text = option;
     priority.add(op);
   });
-  priority.className = 'form-control mb-3 w-75 mx-auto d-block';
+  priority.className = 'form-select mb-3 w-75 mx-auto d-block';
   priority.setAttribute('id', 'editTodoPriority');
 
   notes.className = 'form-control mb-3 w-75 mx-auto d-block';
@@ -49,10 +49,10 @@ function editTodo() {
   notes.setAttribute('type', 'text');
   notes.setAttribute('placeholder', 'Notes');
 
-  button.textContent = 'Create Todo';
+  button.textContent = 'Update Todo';
   button.className = 'btn btn-primary mx-auto d-block';
   button.setAttribute('id', 'editTodoBtn');
-  button.setAttribute('type', 'submit');
+  button.setAttribute('type', 'button');
 
   const projects = JSON.parse(localStorage.getItem('projects'));
   if (projects != null) {
@@ -62,9 +62,9 @@ function editTodo() {
       projectSelection.add(proj);
     });
   }
-  projectSelection.className = 'form-control mb-3 w-75 mx-auto d-block';
+  projectSelection.className = 'form-select mb-3 w-75 mx-auto d-block';
   projectSelection.setAttribute('id', 'editTodoProjectSelection');
-  
+
   form.append(
     heading,
     title,
@@ -87,7 +87,7 @@ function editTodo() {
 
   modalMain.append(div, form);
   modalBg.appendChild(modalMain);
-  
+
   return modalBg;
 }
 

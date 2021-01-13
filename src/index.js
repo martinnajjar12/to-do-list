@@ -6,7 +6,6 @@ const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
 const todoForm = require('./scripts/newTodoForm');
 const editTodo = require('./scripts/editTodo');
-const { nextElementSibling } = require('./scripts/newProjectForm');
 
 let projects = [];
 const projectNameArray = [];
@@ -30,9 +29,7 @@ container.appendChild(todoForm);
 container.appendChild(editTodo);
 
 // Project Modal
-// const closeProj = document.querySelector('#closeProj');
-// const closeTodo = document.querySelector('#closeTodo');
-// const editCloseTodo = document.querySelector('#editCloseTodo');
+
 const projModal = document.querySelector('.project-modal');
 const todoContModal = document.querySelector('.todo-modal');
 const editModalDiv = document.querySelector('.edit-todo-modal');
@@ -46,18 +43,6 @@ projectModal.addEventListener('click', () => {
 todoModal.addEventListener('click', () => {
   todoContModal.classList.add('modal-bg-active');
 });
-
-// closeProj.addEventListener('click', () => {
-//   projModal.classList.remove('modal-bg-active');
-// });
-
-// closeTodo.addEventListener('click', () => {
-//   todoContModal.classList.remove('modal-bg-active');
-// });
-
-// editCloseTodo.addEventListener('click', () =>
-//   editModalDiv.classList.remove('modal-bg-active')
-// );
 
 const modals = [projModal, todoContModal, editModalDiv];
 allClose.forEach((close, index) => {
@@ -124,10 +109,17 @@ const editTodoPriority = document.querySelector('#editTodoPriority');
 const editTodoProject = document.querySelector('#editTodoProjectSelection');
 const editTodoNotes = document.querySelector('#editTodoNotes');
 const editTodoBtn = document.querySelector('#editTodoBtn');
-const editElems = [editTodoTitle, editTodoDesc, editTodoDate, editTodoPriority, editTodoNotes, editTodoProject];
+const editElems = [
+  editTodoTitle,
+  editTodoDesc,
+  editTodoDate,
+  editTodoPriority,
+  editTodoNotes,
+  editTodoProject,
+];
 
 function arrayRemove(arr) {
-  return arr.filter(function(ele){
+  return arr.filter(function (ele) {
     if (ele === true) {
       return ele != true;
     } else {
@@ -146,9 +138,13 @@ const renderTodos = (project) => {
 
     if (todo.finished) {
       li.innerHTML = `
-        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${format(new Date(todo.date.replace(/-/g, '/')), 'MM-dd-yyyy')}</span>`;
+        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${
+        todo.title
+      } ${todo.date}</span>`;
     } else {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${todo.title} ${format(new Date(todo.date.replace(/-/g, '/')), 'MM-dd-yyyy')}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${
+        todo.title
+      } ${todo.date}</span>`;
     }
 
     todoList.appendChild(li);
@@ -163,27 +159,24 @@ const renderTodos = (project) => {
         if (elem === editTodoDate) {
           elem.value = todoValues[index];
         }
-      })
-    });
-
-    editTodoBtn.addEventListener('click', () => {
-      const todoKeys = Object.keys(todo);
-      // console.log(todoKeys);
-      todoKeys.splice(todoKeys.indexOf('finished'), 1);
-      // console.log(todoKeys);
-      editElems.forEach((elem, index) => {
-        console.log(todo[todoKeys[index]]);
-        todo[todoKeys[index]] = elem.value;
       });
-      saveLocal();
     });
 
     finishTodo(projectName, todo);
   });
-
   saveLocal();
 };
 
+function updateTodo(todo) {
+  const todoKeys = Object.keys(todo);
+  todoKeys.splice(todoKeys.indexOf('finished'), 1);
+  editElems.forEach((elem, index) => {
+    todo[todoKeys[index]] = elem.value;
+  });
+  saveLocal();
+}
+
+editTodoBtn.addEventListener('click', () => updateTodo(currentTodo));
 
 // Misc
 const resetRow = () => {

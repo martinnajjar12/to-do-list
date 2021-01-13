@@ -52,7 +52,7 @@ function todoForm() {
   button.textContent = 'Create Todo';
   button.className = 'btn btn-primary mx-auto d-block';
   button.setAttribute('id', 'createTodoBtn');
-  button.setAttribute('type', 'submit');
+  button.setAttribute('type', 'button');
 
   const projects = JSON.parse(localStorage.getItem('projects'));
   if (projects != null) {
