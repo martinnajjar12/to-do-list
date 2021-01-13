@@ -1,4 +1,5 @@
 require('./css/styles.css');
+const { format } = require('date-fns');
 const todo = require('./scripts/todoClass');
 const project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
@@ -145,9 +146,9 @@ const renderTodos = (project) => {
 
     if (todo.finished) {
       li.innerHTML = `
-        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
+        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${format(new Date(todo.date.replace(/-/g, '/')), 'MM-dd-yyyy')}</span>`;
     } else {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${todo.title} ${todo.date}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${todo.title} ${format(new Date(todo.date.replace(/-/g, '/')), 'MM-dd-yyyy')}</span>`;
     }
 
     todoList.appendChild(li);
@@ -159,17 +160,23 @@ const renderTodos = (project) => {
       const todoValues = arrayRemove(Object.values(todo));
       editElems.forEach((elem, index) => {
         elem.value = todoValues[index];
+        if (elem === editTodoDate) {
+          elem.value = todoValues[index];
+        }
       })
     });
 
-    // editTodoBtn.addEventListener('click', () => {
-    //   const todoKeys = Object.keys(todo);
-    //   todoKeys.pop();
-    //   editElems.forEach((elem, index) => {
-    //     todo.todoKeys[index] = elem.value;
-    //   });
-    //   saveLocal();
-    // });
+    editTodoBtn.addEventListener('click', () => {
+      const todoKeys = Object.keys(todo);
+      // console.log(todoKeys);
+      todoKeys.splice(todoKeys.indexOf('finished'), 1);
+      // console.log(todoKeys);
+      editElems.forEach((elem, index) => {
+        console.log(todo[todoKeys[index]]);
+        todo[todoKeys[index]] = elem.value;
+      });
+      saveLocal();
+    });
 
     finishTodo(projectName, todo);
   });
