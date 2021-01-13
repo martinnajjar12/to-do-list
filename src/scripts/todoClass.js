@@ -1,8 +1,10 @@
 const { format } = require('date-fns');
+
 class Todo {
   static lastId = 0;
 
   id;
+
   constructor(
     title,
     description = 'none',
@@ -10,7 +12,7 @@ class Todo {
     priority,
     notes = 'none',
     project,
-    finished = false
+    finished = false,
   ) {
     this.title = title;
     this.description = description;

@@ -88,7 +88,7 @@ function editTodo() {
     notes,
     projectSelection,
     btnCont,
-    id
+    id,
   );
 
   // Modal

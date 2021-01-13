@@ -11,6 +11,7 @@ const projectNameArray = [];
 
 // Container
 const container = document.querySelector('.container');
+const row = document.createElement('div');
 const projectModal = document.createElement('button');
 const todoModal = document.createElement('button');
 
@@ -49,9 +50,81 @@ allClose.forEach((close, index) => {
   });
 });
 
+let checkboxId = 0;
+
 function saveLocal() {
   localStorage.setItem('projects', JSON.stringify(projects));
 }
+
+const createProject = (name) => {
+  const newProject = new Project(name);
+  projects.push(newProject);
+  row.appendChild(projectCard(newProject.name));
+  saveLocal();
+  modalBg.classList.remove('modal-bg-active');
+};
+
+const resetRow = () => {
+  const row = document.querySelector('.row');
+  row.innerHTML = '';
+};
+
+function finishTodo(projectName, todo) {
+  for (let i = 1; i <= checkboxId; i += 1) {
+    const checkbox = document.querySelector(`#${projectName}${i}`);
+    const span = document.querySelector(`#span${projectName}${i}`);
+    checkbox.addEventListener('click', () => {
+      if (checkbox.checked) {
+        todo.finished = true;
+        span.style.textDecoration = 'line-through';
+      } else {
+        todo.finished = false;
+        span.style.textDecoration = 'none';
+      }
+      saveLocal();
+    });
+  }
+}
+
+const renderTodos = (project) => {
+  const projectName = project.name.replace(/ |\/|_|'/g, '-');
+  const todoList = document.querySelector(`#${projectName}Todo`);
+  todoList.innerHTML = '';
+  const todoArray = project.todos;
+  todoArray.forEach((todo) => {
+    const li = document.createElement('li');
+    checkboxId += 1;
+
+    if (todo.finished) {
+      li.innerHTML = `
+        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${
+        todo.title
+      } ${todo.date}</span>`;
+    } else {
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${
+        todo.title
+      } ${todo.date}</span>`;
+    }
+
+    todoList.appendChild(li);
+
+    const span = document.querySelector(`#span${projectName}${checkboxId}`);
+
+    span.addEventListener('click', () => {
+      editModalDiv.classList.add('modal-bg-active');
+      editElems.titleInput.value = todo.title;
+      editElems.descInput.value = todo.description;
+      editElems.dateInput.value = todo.date;
+      editElems.priorityInput.value = todo.priority;
+      editElems.notesInput.value = todo.notes;
+      editElems.projectInput.value = todo.project;
+      editElems.todoIdInput.value = todo.id;
+    });
+
+    finishTodo(projectName, todo);
+  });
+  saveLocal();
+};
 
 function restoreLocal() {
   projects = JSON.parse(localStorage.getItem('projects'));
@@ -72,17 +145,8 @@ function restoreLocal() {
 // Project Form
 const projectName = document.querySelector('#projectName');
 const createProjectBtn = document.querySelector('#createProjectBtn');
-const row = document.createElement('div');
 row.className = 'row';
 container.appendChild(row);
-
-const createProject = (name) => {
-  const newProject = new Project(name);
-  projects.push(newProject);
-  row.appendChild(projectCard(newProject.name));
-  saveLocal();
-  modalBg.classList.remove('modal-bg-active');
-};
 
 createProjectBtn.addEventListener('click', () => {
   createProject(projectName.value);
@@ -102,8 +166,6 @@ function todoArrayOf(project) {
   return projects[projectNameArray.indexOf(project)];
 }
 
-let checkboxId = 0;
-
 const createTodo = () => {
   const newTodo = new Todo(
     todoTitle.value,
@@ -111,7 +173,7 @@ const createTodo = () => {
     todoDate.value,
     todoPriority.value,
     todoNotes.value,
-    todoProject.value
+    todoProject.value,
   );
 
   if (newTodo.description === '') {
@@ -151,49 +213,9 @@ const editElems = {
 };
 
 function findCurrentTodo(todos, todoId) {
-  const currentTodoIndex = todos.findIndex((obj) => obj.id == todoId);
+  const currentTodoIndex = todos.findIndex((obj) => obj.id === todoId);
   return todos[currentTodoIndex];
 }
-
-const renderTodos = (project) => {
-  const projectName = project.name.replace(/ |\/|_|'/g, '-');
-  const todoList = document.querySelector(`#${projectName}Todo`);
-  todoList.innerHTML = '';
-  const todoArray = project.todos;
-  todoArray.forEach((todo) => {
-    const li = document.createElement('li');
-    checkboxId++;
-
-    if (todo.finished) {
-      li.innerHTML = `
-        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${
-        todo.title
-      } ${todo.date}</span>`;
-    } else {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${
-        todo.title
-      } ${todo.date}</span>`;
-    }
-
-    todoList.appendChild(li);
-
-    const span = document.querySelector(`#span${projectName}${checkboxId}`);
-
-    span.addEventListener('click', () => {
-      editModalDiv.classList.add('modal-bg-active');
-      editElems.titleInput.value = todo.title;
-      editElems.descInput.value = todo.description;
-      editElems.dateInput.value = todo.date;
-      editElems.priorityInput.value = todo.priority;
-      editElems.notesInput.value = todo.notes;
-      editElems.projectInput.value = todo.project;
-      editElems.todoIdInput.value = todo.id;
-    });
-
-    finishTodo(projectName, todo);
-  });
-  saveLocal();
-};
 
 const updateTodo = () => {
   const todosArray = todoArrayOf(editElems.projectInput.value).todos;
@@ -225,10 +247,6 @@ deleteTodoBtn.addEventListener('click', () => {
 });
 
 // Misc
-const resetRow = () => {
-  const row = document.querySelector('.row');
-  row.innerHTML = '';
-};
 
 restoreLocal();
 
@@ -236,21 +254,4 @@ if (projects != null) {
   projects.forEach((project) => {
     projectNameArray.push(project.name);
   });
-}
-
-function finishTodo(projectName, todo) {
-  for (let i = 1; i <= checkboxId; i++) {
-    const checkbox = document.querySelector(`#${projectName}${i}`);
-    const span = document.querySelector(`#span${projectName}${i}`);
-    checkbox.addEventListener('click', () => {
-      if (checkbox.checked) {
-        todo.finished = true;
-        span.style.textDecoration = 'line-through';
-      } else {
-        todo.finished = false;
-        span.style.textDecoration = 'none';
-      }
-      saveLocal();
-    });
-  }
 }

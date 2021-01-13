@@ -73,7 +73,7 @@ function todoForm() {
     priority,
     notes,
     projectSelection,
-    button
+    button,
   );
 
   // Modal
