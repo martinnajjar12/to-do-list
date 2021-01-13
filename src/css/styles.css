@@ -2,15 +2,15 @@ body {
   background-color: #dadada;
 }
 
-.green {
+.low {
   color: green;
 }
 
-.orange {
+.medium {
   color: orangered;
 }
 
-.red {
+.high {
   color: red;
 }
 

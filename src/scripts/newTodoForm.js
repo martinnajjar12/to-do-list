@@ -34,11 +34,10 @@ function todoForm() {
   date.setAttribute('min', format(new Date(), 'yyyy-MM-dd'));
 
   const options = ['Low', 'Medium', 'High'];
-  const colors = ['green', 'orange', 'red'];
   options.forEach((option, index) => {
     const op = document.createElement('option');
 
-    op.classList = colors[index];
+    op.classList = options[index].toLowerCase();
     op.text = option;
     priority.add(op);
   });

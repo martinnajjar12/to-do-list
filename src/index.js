@@ -5,6 +5,7 @@ const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
 const todoForm = require('./scripts/newTodoForm');
 const editTodo = require('./scripts/editTodo');
+const { nextElementSibling } = require('./scripts/newProjectForm');
 
 let projects = [];
 const projectNameArray = [];
@@ -93,8 +94,10 @@ const createTodo = () => {
     todoDesc.value,
     todoDate.value,
     todoPriority.value,
-    todoNotes.value
+    todoNotes.value,
+    todoProject.value
   );
+
   projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
   saveLocal();
   checkboxId = 0;
@@ -105,6 +108,25 @@ const createTodo = () => {
 createTodoBtn.addEventListener('click', createTodo);
 
 // Render Todo List
+const editTodoTitle = document.querySelector('#editTodoTitle');
+const editTodoDesc = document.querySelector('#editTodoDesc');
+const editTodoDate = document.querySelector('#editTodoDate');
+const editTodoPriority = document.querySelector('#editTodoPriority');
+const editTodoProject = document.querySelector('#editTodoProjectSelection');
+const editTodoNotes = document.querySelector('#editTodoNotes');
+const editTodoBtn = document.querySelector('#editTodoBtn');
+const editElems = [editTodoTitle, editTodoDesc, editTodoDate, editTodoPriority, editTodoNotes, editTodoProject];
+
+function arrayRemove(arr) {
+  return arr.filter(function(ele){
+    if (ele === true) {
+      return ele != true;
+    } else {
+      return ele != false;
+    }
+  });
+}
+
 const renderTodos = (project) => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
   const todoList = document.querySelector(`#${projectName}Todo`);
@@ -112,20 +134,41 @@ const renderTodos = (project) => {
   project.todos.forEach((todo) => {
     const li = document.createElement('li');
     checkboxId++;
+
     if (todo.finished) {
       li.innerHTML = `
-        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
+        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
     } else {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span id='span${projectName}${checkboxId}'>${todo.title}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${todo.title} ${todo.date}</span>`;
     }
-    li.addEventListener('click', () => {
-      editModalDiv.classList.add('modal-bg-active');
-    });
+
     todoList.appendChild(li);
+
+    const span = document.querySelector(`#span${projectName}${checkboxId}`);
+
+    span.addEventListener('click', () => {
+      editModalDiv.classList.add('modal-bg-active');
+      const todoValues = arrayRemove(Object.values(todo));
+      editElems.forEach((elem, index) => {
+        elem.value = todoValues[index];
+      })
+    });
+
+    // editTodoBtn.addEventListener('click', () => {
+    //   const todoKeys = Object.keys(todo);
+    //   todoKeys.pop();
+    //   editElems.forEach((elem, index) => {
+    //     todo.todoKeys[index] = elem.value;
+    //   });
+    //   saveLocal();
+    // });
+
     finishTodo(projectName, todo);
   });
+
   saveLocal();
 };
+
 
 // Misc
 const resetRow = () => {
