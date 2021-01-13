@@ -5,16 +5,16 @@ class Todo {
   id;
   constructor(
     title,
-    description,
+    description = 'none',
     date,
     priority,
-    notes,
+    notes = 'none',
     project,
     finished = false
   ) {
     this.title = title;
     this.description = description;
-    this.date = format(new Date(date), 'yyyy-MM-dd');
+    this.date = format(new Date(date.replace(/-/g, ',')), 'yyyy-MM-dd');
     this.priority = priority;
     this.notes = notes;
     this.finished = finished;

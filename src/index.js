@@ -92,6 +92,14 @@ const createTodo = () => {
     todoProject.value
   );
 
+  if (newTodo.description === '') {
+    newTodo.description = 'none';
+  }
+
+  if (newTodo.notes === '') {
+    newTodo.notes = 'none';
+  }
+
   projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
   saveLocal();
   checkboxId = 0;
@@ -121,9 +129,9 @@ const editElems = [
 function arrayRemove(arr) {
   return arr.filter(function (ele) {
     if (ele === true) {
-      return ele != true;
+      return ele != true && !Number.isInteger(ele);
     } else {
-      return ele != false;
+      return ele != false && !Number.isInteger(ele);
     }
   });
 }
@@ -132,7 +140,8 @@ const renderTodos = (project) => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
   const todoList = document.querySelector(`#${projectName}Todo`);
   todoList.innerHTML = '';
-  project.todos.forEach((todo) => {
+  const todoArray = project.todos;
+  todoArray.forEach((todo, index) => {
     const li = document.createElement('li');
     checkboxId++;
 
@@ -154,29 +163,31 @@ const renderTodos = (project) => {
     span.addEventListener('click', () => {
       editModalDiv.classList.add('modal-bg-active');
       const todoValues = arrayRemove(Object.values(todo));
+      console.log(todoValues);
       editElems.forEach((elem, index) => {
         elem.value = todoValues[index];
-        if (elem === editTodoDate) {
-          elem.value = todoValues[index];
-        }
       });
+    });
+
+    todoIndex = todoArray.findIndex((obj => obj.id == index+1))
+    editTodoBtn.addEventListener('click', () => {
+      const oneTodo = todoArray[todoIndex]
+      console.log(oneTodo.id);
+      const todoKeys = Object.keys(oneTodo);
+      todoKeys.splice(todoKeys.indexOf('finished'), 1);
+      todoKeys.splice(todoKeys.indexOf('id'), 1);
+      editElems.forEach((elem, index) => {
+        console.log(oneTodo[todoKeys[index]])
+        oneTodo[todoKeys[index]] = elem.value;
+      });
+      saveLocal();
+      editModalDiv.classList.remove('modal-bg-active');
     });
 
     finishTodo(projectName, todo);
   });
   saveLocal();
 };
-
-function updateTodo(todo) {
-  const todoKeys = Object.keys(todo);
-  todoKeys.splice(todoKeys.indexOf('finished'), 1);
-  editElems.forEach((elem, index) => {
-    todo[todoKeys[index]] = elem.value;
-  });
-  saveLocal();
-}
-
-editTodoBtn.addEventListener('click', () => updateTodo(currentTodo));
 
 // Misc
 const resetRow = () => {
