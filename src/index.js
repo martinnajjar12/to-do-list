@@ -29,13 +29,14 @@ container.appendChild(todoForm);
 container.appendChild(editTodo);
 
 // Project Modal
-const closeProj = document.querySelector('#closeProj');
-const closeTodo = document.querySelector('#closeTodo');
-const editCloseTodo = document.querySelector('#editCloseTodo');
+// const closeProj = document.querySelector('#closeProj');
+// const closeTodo = document.querySelector('#closeTodo');
+// const editCloseTodo = document.querySelector('#editCloseTodo');
 const projModal = document.querySelector('.project-modal');
 const todoContModal = document.querySelector('.todo-modal');
 const editModalDiv = document.querySelector('.edit-todo-modal');
 const modalBg = document.querySelector('.modal-bg');
+const allClose = document.querySelectorAll('.close');
 
 projectModal.addEventListener('click', () => {
   projModal.classList.add('modal-bg-active');
@@ -45,17 +46,24 @@ todoModal.addEventListener('click', () => {
   todoContModal.classList.add('modal-bg-active');
 });
 
-closeProj.addEventListener('click', () => {
-  projModal.classList.remove('modal-bg-active');
-});
+// closeProj.addEventListener('click', () => {
+//   projModal.classList.remove('modal-bg-active');
+// });
 
-closeTodo.addEventListener('click', () => {
-  todoContModal.classList.remove('modal-bg-active');
-});
+// closeTodo.addEventListener('click', () => {
+//   todoContModal.classList.remove('modal-bg-active');
+// });
 
-editCloseTodo.addEventListener('click', () =>
-  editModalDiv.classList.remove('modal-bg-active')
-);
+// editCloseTodo.addEventListener('click', () =>
+//   editModalDiv.classList.remove('modal-bg-active')
+// );
+
+const modals = [projModal, todoContModal, editModalDiv];
+allClose.forEach((close, index) => {
+  close.addEventListener('click', () => {
+    modals[index].classList.remove('modal-bg-active');
+  });
+});
 
 // Project Form
 const projectName = document.querySelector('#projectName');
