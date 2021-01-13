@@ -21,7 +21,7 @@ class Todo {
     this.notes = notes;
     this.finished = finished;
     this.project = project;
-    this.id = ++Todo.lastId;
+    this.id = 1 += Todo.lastId;
   }
 }
 

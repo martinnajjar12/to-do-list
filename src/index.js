@@ -15,6 +15,25 @@ const row = document.createElement('div');
 const projectModal = document.createElement('button');
 const todoModal = document.createElement('button');
 
+// Edit a To-Do
+const editTodoTitle = document.querySelector('#editTodoTitle');
+const editTodoDesc = document.querySelector('#editTodoDesc');
+const editTodoDate = document.querySelector('#editTodoDate');
+const editTodoPriority = document.querySelector('#editTodoPriority');
+const editTodoProject = document.querySelector('#editTodoProjectSelection');
+const editTodoNotes = document.querySelector('#editTodoNotes');
+const editTodoBtn = document.querySelector('#editTodoBtn');
+const todoId = document.querySelector('#todoId');
+const editElems = {
+  titleInput: editTodoTitle,
+  descInput: editTodoDesc,
+  dateInput: editTodoDate,
+  priorityInput: editTodoPriority,
+  notesInput: editTodoNotes,
+  projectInput: editTodoProject,
+  todoIdInput: todoId,
+};
+
 projectModal.setAttribute('type', 'button');
 projectModal.className = 'project-modal-btn btn btn-primary mt-3 me-3';
 projectModal.textContent = 'Create Project';
@@ -96,14 +115,9 @@ const renderTodos = (project) => {
     checkboxId += 1;
 
     if (todo.finished) {
-      li.innerHTML = `
-        <input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${
-        todo.title
-      } ${todo.date}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
     } else {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${
-        todo.title
-      } ${todo.date}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${todo.title} ${todo.date}</span>`;
     }
 
     todoList.appendChild(li);
@@ -192,25 +206,6 @@ const createTodo = () => {
 };
 
 createTodoBtn.addEventListener('click', createTodo);
-
-// Edit a Todo
-const editTodoTitle = document.querySelector('#editTodoTitle');
-const editTodoDesc = document.querySelector('#editTodoDesc');
-const editTodoDate = document.querySelector('#editTodoDate');
-const editTodoPriority = document.querySelector('#editTodoPriority');
-const editTodoProject = document.querySelector('#editTodoProjectSelection');
-const editTodoNotes = document.querySelector('#editTodoNotes');
-const editTodoBtn = document.querySelector('#editTodoBtn');
-const todoId = document.querySelector('#todoId');
-const editElems = {
-  titleInput: editTodoTitle,
-  descInput: editTodoDesc,
-  dateInput: editTodoDate,
-  priorityInput: editTodoPriority,
-  notesInput: editTodoNotes,
-  projectInput: editTodoProject,
-  todoIdInput: todoId,
-};
 
 function findCurrentTodo(todos, todoId) {
   const currentTodoIndex = todos.findIndex((obj) => obj.id === todoId);
