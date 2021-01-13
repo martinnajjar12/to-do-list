@@ -1,6 +1,6 @@
 require('./css/styles.css');
-const todo = require('./scripts/todoClass');
-const project = require('./scripts/project');
+const Todo = require('./scripts/todoClass');
+const Project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
 const projectForm = require('./scripts/newProjectForm');
 const todoForm = require('./scripts/newTodoForm');
@@ -49,6 +49,26 @@ allClose.forEach((close, index) => {
   });
 });
 
+function saveLocal() {
+  localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+function restoreLocal() {
+  projects = JSON.parse(localStorage.getItem('projects'));
+  if (projects === null) {
+    projects = [];
+    createProject('default');
+  } else {
+    resetRow();
+    projects.forEach((project) => {
+      checkboxId = 0;
+      const newProject = projectCard(project.name);
+      row.appendChild(newProject);
+      renderTodos(project);
+    });
+  }
+}
+
 // Project Form
 const projectName = document.querySelector('#projectName');
 const createProjectBtn = document.querySelector('#createProjectBtn');
@@ -57,7 +77,7 @@ row.className = 'row';
 container.appendChild(row);
 
 const createProject = (name) => {
-  const newProject = new project(name);
+  const newProject = new Project(name);
   projects.push(newProject);
   row.appendChild(projectCard(newProject.name));
   saveLocal();
@@ -85,7 +105,7 @@ function todoArrayOf(project) {
 let checkboxId = 0;
 
 const createTodo = () => {
-  const newTodo = new todo(
+  const newTodo = new Todo(
     todoTitle.value,
     todoDesc.value,
     todoDate.value,
@@ -209,26 +229,6 @@ const resetRow = () => {
   const row = document.querySelector('.row');
   row.innerHTML = '';
 };
-
-function saveLocal() {
-  localStorage.setItem('projects', JSON.stringify(projects));
-}
-
-function restoreLocal() {
-  projects = JSON.parse(localStorage.getItem('projects'));
-  if (projects === null) {
-    projects = [];
-    createProject('default');
-  } else {
-    resetRow();
-    projects.forEach((project) => {
-      checkboxId = 0;
-      const newProject = projectCard(project.name);
-      row.appendChild(newProject);
-      renderTodos(project);
-    });
-  }
-}
 
 restoreLocal();
 
