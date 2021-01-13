@@ -15,25 +15,6 @@ const row = document.createElement('div');
 const projectModal = document.createElement('button');
 const todoModal = document.createElement('button');
 
-// Edit a To-Do
-const editTodoTitle = document.querySelector('#editTodoTitle');
-const editTodoDesc = document.querySelector('#editTodoDesc');
-const editTodoDate = document.querySelector('#editTodoDate');
-const editTodoPriority = document.querySelector('#editTodoPriority');
-const editTodoProject = document.querySelector('#editTodoProjectSelection');
-const editTodoNotes = document.querySelector('#editTodoNotes');
-const editTodoBtn = document.querySelector('#editTodoBtn');
-const todoId = document.querySelector('#todoId');
-const editElems = {
-  titleInput: editTodoTitle,
-  descInput: editTodoDesc,
-  dateInput: editTodoDate,
-  priorityInput: editTodoPriority,
-  notesInput: editTodoNotes,
-  projectInput: editTodoProject,
-  todoIdInput: todoId,
-};
-
 projectModal.setAttribute('type', 'button');
 projectModal.className = 'project-modal-btn btn btn-primary mt-3 me-3';
 projectModal.textContent = 'Create Project';
@@ -68,6 +49,15 @@ allClose.forEach((close, index) => {
     modals[index].classList.remove('modal-bg-active');
   });
 });
+
+// Todo Form
+const todoTitle = document.querySelector('#todoTitle');
+const todoDesc = document.querySelector('#todoDesc');
+const todoDate = document.querySelector('#todoDate');
+const todoPriority = document.querySelector('#todoPriority');
+const todoProject = document.querySelector('#todoProjectSelection');
+const todoNotes = document.querySelector('#todoNotes');
+const createTodoBtn = document.querySelector('#createTodoBtn');
 
 let checkboxId = 0;
 
@@ -104,6 +94,23 @@ function finishTodo(projectName, todo) {
     });
   }
 }
+
+const editTodoTitle = document.querySelector('#editTodoTitle');
+const editTodoDesc = document.querySelector('#editTodoDesc');
+const editTodoDate = document.querySelector('#editTodoDate');
+const editTodoPriority = document.querySelector('#editTodoPriority');
+const editTodoProject = document.querySelector('#editTodoProjectSelection');
+const editTodoNotes = document.querySelector('#editTodoNotes');
+const todoId = document.querySelector('#todoId');
+const editElems = {
+  titleInput: editTodoTitle,
+  descInput: editTodoDesc,
+  dateInput: editTodoDate,
+  priorityInput: editTodoPriority,
+  notesInput: editTodoNotes,
+  projectInput: editTodoProject,
+  todoIdInput: todoId,
+};
 
 const renderTodos = (project) => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
@@ -167,18 +174,35 @@ createProjectBtn.addEventListener('click', () => {
   restoreLocal();
 });
 
-// Todo Form
-const todoTitle = document.querySelector('#todoTitle');
-const todoDesc = document.querySelector('#todoDesc');
-const todoDate = document.querySelector('#todoDate');
-const todoPriority = document.querySelector('#todoPriority');
-const todoProject = document.querySelector('#todoProjectSelection');
-const todoNotes = document.querySelector('#todoNotes');
-const createTodoBtn = document.querySelector('#createTodoBtn');
-
 function todoArrayOf(project) {
   return projects[projectNameArray.indexOf(project)];
 }
+
+function findCurrentTodo(todos, todoId) {
+  const currentTodoIndex = todos.findIndex((obj) => obj.id == todoId);
+  return todos[currentTodoIndex];
+}
+
+// function updateTodoProject(elem, currentValue) {
+//   const todosArray = todoArrayOf(editElems.projectInput.value).todos;
+//   const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
+
+//   if (elem.)
+// }
+
+const updateTodo = () => {
+  const todosArray = todoArrayOf(editElems.projectInput.value).todos;
+  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
+  currentTodo.date = editElems.dateInput.value;
+  currentTodo.description = editElems.descInput.value;
+  currentTodo.notes = editElems.notesInput.value;
+  currentTodo.priority = editElems.priorityInput.value;
+  currentTodo.project = editElems.projectInput.value;
+  currentTodo.title = editElems.titleInput.value;
+  // updateTodoProject(currentTodo.project, currentTodo);
+  editModalDiv.classList.remove('modal-bg-active');
+  saveLocal();
+};
 
 const createTodo = () => {
   const newTodo = new Todo(
@@ -207,23 +231,10 @@ const createTodo = () => {
 
 createTodoBtn.addEventListener('click', createTodo);
 
-function findCurrentTodo(todos, todoId) {
-  const currentTodoIndex = todos.findIndex((obj) => obj.id === todoId);
-  return todos[currentTodoIndex];
-}
+// Edit a To-Do
 
-const updateTodo = () => {
-  const todosArray = todoArrayOf(editElems.projectInput.value).todos;
-  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
-  currentTodo.date = editElems.dateInput.value;
-  currentTodo.description = editElems.descInput.value;
-  currentTodo.notes = editElems.notesInput.value;
-  currentTodo.priority = editElems.priorityInput.value;
-  currentTodo.project = editElems.projectInput.value;
-  currentTodo.title = editElems.titleInput.value;
-  editModalDiv.classList.remove('modal-bg-active');
-  saveLocal();
-};
+const editTodoBtn = document.querySelector('#editTodoBtn');
+
 
 editTodoBtn.addEventListener('click', () => {
   updateTodo();

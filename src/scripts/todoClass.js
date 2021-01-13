@@ -1,16 +1,12 @@
 const { format } = require('date-fns');
 
 class Todo {
-  static lastId = 0;
-
-  id;
-
   constructor(
     title,
-    description = 'none',
+    description,
     date,
     priority,
-    notes = 'none',
+    notes,
     project,
     finished = false,
   ) {
@@ -21,7 +17,13 @@ class Todo {
     this.notes = notes;
     this.finished = finished;
     this.project = project;
-    this.id = 1 += Todo.lastId;
+    this.id = Todo.incrementId();
+  }
+
+  static incrementId() {
+    if (!this.latestId) this.latestId = 1;
+    else this.latestId += 1;
+    return this.latestId;
   }
 }
 
