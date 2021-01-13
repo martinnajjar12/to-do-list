@@ -8,6 +8,7 @@ function editTodo() {
   const priority = document.createElement('select');
   const projectSelection = document.createElement('select');
   const notes = document.createElement('input');
+  const id = document.createElement('input');
   const heading = document.createElement('h5');
   const button = document.createElement('button');
   const modalBg = document.createElement('div');
@@ -49,6 +50,9 @@ function editTodo() {
   notes.setAttribute('type', 'text');
   notes.setAttribute('placeholder', 'Notes');
 
+  id.setAttribute('type', 'hidden');
+  id.setAttribute('id', 'todoId');
+
   button.textContent = 'Update Todo';
   button.className = 'btn btn-primary mx-auto d-block';
   button.setAttribute('id', 'editTodoBtn');
@@ -73,7 +77,8 @@ function editTodo() {
     priority,
     notes,
     projectSelection,
-    button
+    button,
+    id
   );
 
   // Modal

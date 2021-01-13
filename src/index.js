@@ -1,5 +1,4 @@
 require('./css/styles.css');
-const { format } = require('date-fns');
 const todo = require('./scripts/todoClass');
 const project = require('./scripts/project');
 const projectCard = require('./scripts/projectCardLayout');
@@ -109,7 +108,7 @@ const createTodo = () => {
 
 createTodoBtn.addEventListener('click', createTodo);
 
-// Render Todo List
+// Edit a Todo
 const editTodoTitle = document.querySelector('#editTodoTitle');
 const editTodoDesc = document.querySelector('#editTodoDesc');
 const editTodoDate = document.querySelector('#editTodoDate');
@@ -117,24 +116,45 @@ const editTodoPriority = document.querySelector('#editTodoPriority');
 const editTodoProject = document.querySelector('#editTodoProjectSelection');
 const editTodoNotes = document.querySelector('#editTodoNotes');
 const editTodoBtn = document.querySelector('#editTodoBtn');
-const editElems = [
-  editTodoTitle,
-  editTodoDesc,
-  editTodoDate,
-  editTodoPriority,
-  editTodoNotes,
-  editTodoProject,
-];
+const todoId = document.querySelector('#todoId');
+const editElems = {
+  titleInput: editTodoTitle,
+  descInput: editTodoDesc,
+  dateInput: editTodoDate,
+  priorityInput: editTodoPriority,
+  notesInput: editTodoNotes,
+  porjectInput: editTodoProject,
+  todoIdInput: todoId,
+};
 
-function arrayRemove(arr) {
-  return arr.filter(function (ele) {
-    if (ele === true) {
-      return ele != true && !Number.isInteger(ele);
-    } else {
-      return ele != false && !Number.isInteger(ele);
-    }
-  });
+function todoArrayOf(project) {
+  return projects[projectNameArray.indexOf(project)];
 }
+
+function findCurrentTodo(todos, todoId) {
+  const currentTodoIndex = todos.findIndex((obj) => obj.id == todoId);
+  return todos[currentTodoIndex];
+}
+
+const updateTodo = () => {
+  const todosArray = todoArrayOf(editElems.porjectInput.value).todos;
+  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
+  currentTodo.date = editElems.dateInput.value;
+  currentTodo.description = editElems.descInput.value;
+  currentTodo.notes = editElems.notesInput.value;
+  currentTodo.priority = editElems.priorityInput.value;
+  currentTodo.project = editElems.porjectInput.value;
+  currentTodo.title = editElems.titleInput.value;
+  console.log(currentTodo);
+  editModalDiv.classList.remove('modal-bg-active');
+  saveLocal();
+  restoreLocal();
+  // renderTodos(todoArrayOf(editElems.porjectInput.value));
+};
+
+editTodoBtn.addEventListener('click', () => {
+  updateTodo();
+});
 
 const renderTodos = (project) => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
@@ -162,26 +182,13 @@ const renderTodos = (project) => {
 
     span.addEventListener('click', () => {
       editModalDiv.classList.add('modal-bg-active');
-      const todoValues = arrayRemove(Object.values(todo));
-      console.log(todoValues);
-      editElems.forEach((elem, index) => {
-        elem.value = todoValues[index];
-      });
-    });
-
-    todoIndex = todoArray.findIndex((obj => obj.id == index+1))
-    editTodoBtn.addEventListener('click', () => {
-      const oneTodo = todoArray[todoIndex]
-      console.log(oneTodo.id);
-      const todoKeys = Object.keys(oneTodo);
-      todoKeys.splice(todoKeys.indexOf('finished'), 1);
-      todoKeys.splice(todoKeys.indexOf('id'), 1);
-      editElems.forEach((elem, index) => {
-        console.log(oneTodo[todoKeys[index]])
-        oneTodo[todoKeys[index]] = elem.value;
-      });
-      saveLocal();
-      editModalDiv.classList.remove('modal-bg-active');
+      editElems.titleInput.value = todo.title;
+      editElems.descInput.value = todo.description;
+      editElems.dateInput.value = todo.date;
+      editElems.priorityInput.value = todo.priority;
+      editElems.notesInput.value = todo.notes;
+      editElems.porjectInput.value = todo.project;
+      editElems.todoIdInput.value = todo.id;
     });
 
     finishTodo(projectName, todo);
