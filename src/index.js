@@ -79,6 +79,10 @@ const todoProject = document.querySelector('#todoProjectSelection');
 const todoNotes = document.querySelector('#todoNotes');
 const createTodoBtn = document.querySelector('#createTodoBtn');
 
+function todoArrayOf(project) {
+  return projects[projectNameArray.indexOf(project)];
+}
+
 let checkboxId = 0;
 
 const createTodo = () => {
@@ -99,10 +103,10 @@ const createTodo = () => {
     newTodo.notes = 'none';
   }
 
-  projects[projectNameArray.indexOf(todoProject.value)].todos.push(newTodo);
+  todoArrayOf(todoProject.value).todos.push(newTodo);
   saveLocal();
   checkboxId = 0;
-  renderTodos(projects[projectNameArray.indexOf(todoProject.value)]);
+  renderTodos(todoArrayOf(todoProject.value));
   todoContModal.classList.remove('modal-bg-active');
 };
 
@@ -123,45 +127,22 @@ const editElems = {
   dateInput: editTodoDate,
   priorityInput: editTodoPriority,
   notesInput: editTodoNotes,
-  porjectInput: editTodoProject,
+  projectInput: editTodoProject,
   todoIdInput: todoId,
 };
 
-function todoArrayOf(project) {
-  return projects[projectNameArray.indexOf(project)];
-}
 
 function findCurrentTodo(todos, todoId) {
   const currentTodoIndex = todos.findIndex((obj) => obj.id == todoId);
   return todos[currentTodoIndex];
 }
 
-const updateTodo = () => {
-  const todosArray = todoArrayOf(editElems.porjectInput.value).todos;
-  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
-  currentTodo.date = editElems.dateInput.value;
-  currentTodo.description = editElems.descInput.value;
-  currentTodo.notes = editElems.notesInput.value;
-  currentTodo.priority = editElems.priorityInput.value;
-  currentTodo.project = editElems.porjectInput.value;
-  currentTodo.title = editElems.titleInput.value;
-  console.log(currentTodo);
-  editModalDiv.classList.remove('modal-bg-active');
-  saveLocal();
-  restoreLocal();
-  // renderTodos(todoArrayOf(editElems.porjectInput.value));
-};
-
-editTodoBtn.addEventListener('click', () => {
-  updateTodo();
-});
-
 const renderTodos = (project) => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
   const todoList = document.querySelector(`#${projectName}Todo`);
   todoList.innerHTML = '';
   const todoArray = project.todos;
-  todoArray.forEach((todo, index) => {
+  todoArray.forEach((todo) => {
     const li = document.createElement('li');
     checkboxId++;
 
@@ -187,7 +168,7 @@ const renderTodos = (project) => {
       editElems.dateInput.value = todo.date;
       editElems.priorityInput.value = todo.priority;
       editElems.notesInput.value = todo.notes;
-      editElems.porjectInput.value = todo.project;
+      editElems.projectInput.value = todo.project;
       editElems.todoIdInput.value = todo.id;
     });
 
@@ -195,6 +176,24 @@ const renderTodos = (project) => {
   });
   saveLocal();
 };
+
+const updateTodo = () => {
+  const todosArray = todoArrayOf(editElems.projectInput.value).todos;
+  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
+  currentTodo.date = editElems.dateInput.value;
+  currentTodo.description = editElems.descInput.value;
+  currentTodo.notes = editElems.notesInput.value;
+  currentTodo.priority = editElems.priorityInput.value;
+  currentTodo.project = editElems.projectInput.value;
+  currentTodo.title = editElems.titleInput.value;
+  editModalDiv.classList.remove('modal-bg-active');
+  saveLocal();
+};
+
+editTodoBtn.addEventListener('click', () => {
+  updateTodo();
+  restoreLocal();
+});
 
 // Misc
 const resetRow = () => {
@@ -216,7 +215,7 @@ function restoreLocal() {
     projects.forEach((project) => {
       checkboxId = 0;
       const newProject = projectCard(project.name);
-      row.appendChild(newProject);
+      row.appendChild(newProject)
       renderTodos(project);
     });
   }
@@ -232,7 +231,9 @@ if (projects != null) {
 
 function finishTodo(projectName, todo) {
   for (let i = 1; i <= checkboxId; i++) {
+    console.log(projectName);
     const checkbox = document.querySelector(`#${projectName}${i}`);
+    console.log(checkbox);
     const span = document.querySelector(`#span${projectName}${i}`);
     checkbox.addEventListener('click', () => {
       if (checkbox.checked) {
