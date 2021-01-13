@@ -202,7 +202,7 @@ deleteTodoBtn.addEventListener('click', () => {
   editModalDiv.classList.remove('modal-bg-active');
   saveLocal();
   restoreLocal();
-})
+});
 
 // Misc
 const resetRow = () => {
@@ -224,7 +224,7 @@ function restoreLocal() {
     projects.forEach((project) => {
       checkboxId = 0;
       const newProject = projectCard(project.name);
-      row.appendChild(newProject)
+      row.appendChild(newProject);
       renderTodos(project);
     });
   }

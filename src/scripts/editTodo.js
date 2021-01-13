@@ -60,7 +60,7 @@ function editTodo() {
   button.setAttribute('id', 'editTodoBtn');
   button.setAttribute('type', 'button');
 
-  deleteTodoBtn.textContent = 'Delete'
+  deleteTodoBtn.textContent = 'Delete';
   deleteTodoBtn.className = 'btn btn-danger d-block';
   deleteTodoBtn.setAttribute('id', 'deleteTodoBtn');
   deleteTodoBtn.setAttribute('type', 'button');

@@ -22,21 +22,21 @@ We created a very simple to-do list with JavaScript. We used object oriented pro
 
 ## Live Preview
 
-[To-do List](https://jcy2704.github.io/library/)
+[To-do List](https://rawcdn.githack.com/martinnajjar12/to-do-list/089ce4f2866ad117cd0d17cb8dee20349fa8fcbb/dist/index.html)
 
 ## Getting Started
 
 **This project was created to understand more about objects and functions in JavaScript.**
 
-
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+
 Computer running Mac OS, Windows, or Linux Ubuntu.
 Internet browser: Firefox, Google Chrome, Opera...
 
-
 ### Setup
+
 Download the code or copy the git repository to your computer.
 
 To install dependencies you need to run the following command in your terminal.
@@ -46,27 +46,29 @@ To install dependencies you need to run the following command in your terminal.
 ```
 
 ### Usage
+
 Run live server extension in VSCode or run the index.html file in dist folder from the cloned repository.
 
 Use these scripts to compile your work.
 
 **Build** to compile once your code.
+
 ```
     npm run build
 ```
 
 **Watch** script to compile everytime you make a change, great combination with live server extension.
+
 ```
     npm run watch
 ```
-
 
 ## Authors
 
 👤 **Steven Jack Chung**
 
 - GitHub: [@jcy2704](https://github.com/jcy2704)
-- Twitter: [@yiak_](https://twitter.com/yiak_)
+- Twitter: [@yiak\_](https://twitter.com/yiak_)
 - LinkedIn: [Steven Jack Chung](https://linkedin.com/in/stevenjchung)
 
 👤 **Martin Najjar**
