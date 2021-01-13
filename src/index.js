@@ -27,8 +27,7 @@ container.appendChild(projectForm);
 container.appendChild(todoForm);
 container.appendChild(editTodo);
 
-// Project Modal
-
+// Project and Todo Modals
 const projModal = document.querySelector('.project-modal');
 const todoContModal = document.querySelector('.todo-modal');
 const editModalDiv = document.querySelector('.edit-todo-modal');
@@ -131,7 +130,6 @@ const editElems = {
   todoIdInput: todoId,
 };
 
-
 function findCurrentTodo(todos, todoId) {
   const currentTodoIndex = todos.findIndex((obj) => obj.id == todoId);
   return todos[currentTodoIndex];
@@ -195,6 +193,17 @@ editTodoBtn.addEventListener('click', () => {
   restoreLocal();
 });
 
+const deleteTodoBtn = document.querySelector('#deleteTodoBtn');
+
+deleteTodoBtn.addEventListener('click', () => {
+  const todosArray = todoArrayOf(editElems.projectInput.value).todos;
+  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
+  todosArray.splice(todosArray.indexOf(currentTodo), 1);
+  editModalDiv.classList.remove('modal-bg-active');
+  saveLocal();
+  restoreLocal();
+})
+
 // Misc
 const resetRow = () => {
   const row = document.querySelector('.row');
@@ -231,9 +240,7 @@ if (projects != null) {
 
 function finishTodo(projectName, todo) {
   for (let i = 1; i <= checkboxId; i++) {
-    console.log(projectName);
     const checkbox = document.querySelector(`#${projectName}${i}`);
-    console.log(checkbox);
     const span = document.querySelector(`#span${projectName}${i}`);
     checkbox.addEventListener('click', () => {
       if (checkbox.checked) {

@@ -15,6 +15,8 @@ function editTodo() {
   const modalMain = document.createElement('div');
   const close = document.createElement('i');
   const div = document.createElement('div');
+  const deleteTodoBtn = document.createElement('button');
+  const btnCont = document.createElement('div');
 
   heading.textContent = 'Edit To Do';
   heading.className = 'w-75 mx-auto d-block';
@@ -54,9 +56,17 @@ function editTodo() {
   id.setAttribute('id', 'todoId');
 
   button.textContent = 'Update Todo';
-  button.className = 'btn btn-primary mx-auto d-block';
+  button.className = 'btn btn-primary d-block';
   button.setAttribute('id', 'editTodoBtn');
   button.setAttribute('type', 'button');
+
+  deleteTodoBtn.textContent = 'Delete'
+  deleteTodoBtn.className = 'btn btn-danger d-block';
+  deleteTodoBtn.setAttribute('id', 'deleteTodoBtn');
+  deleteTodoBtn.setAttribute('type', 'button');
+
+  btnCont.className = 'mb-3 w-75 mx-auto d-flex justify-content-around';
+  btnCont.append(button, deleteTodoBtn);
 
   const projects = JSON.parse(localStorage.getItem('projects'));
   if (projects != null) {
@@ -77,7 +87,7 @@ function editTodo() {
     priority,
     notes,
     projectSelection,
-    button,
+    btnCont,
     id
   );
 
