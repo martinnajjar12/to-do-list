@@ -183,13 +183,6 @@ function findCurrentTodo(todos, todoId) {
   return todos[currentTodoIndex];
 }
 
-// function updateTodoProject(elem, currentValue) {
-//   const todosArray = todoArrayOf(editElems.projectInput.value).todos;
-//   const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
-
-//   if (elem.)
-// }
-
 const updateTodo = () => {
   const todosArray = todoArrayOf(editElems.projectInput.value).todos;
   const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
@@ -199,7 +192,6 @@ const updateTodo = () => {
   currentTodo.priority = editElems.priorityInput.value;
   currentTodo.project = editElems.projectInput.value;
   currentTodo.title = editElems.titleInput.value;
-  // updateTodoProject(currentTodo.project, currentTodo);
   editModalDiv.classList.remove('modal-bg-active');
   saveLocal();
 };
@@ -234,7 +226,6 @@ createTodoBtn.addEventListener('click', createTodo);
 // Edit a To-Do
 
 const editTodoBtn = document.querySelector('#editTodoBtn');
-
 
 editTodoBtn.addEventListener('click', () => {
   updateTodo();
