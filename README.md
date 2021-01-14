@@ -22,7 +22,7 @@ We created a very simple to-do list with JavaScript. We used object oriented pro
 
 ## Live Preview
 
-[To-do List](https://rawcdn.githack.com/martinnajjar12/to-do-list/089ce4f2866ad117cd0d17cb8dee20349fa8fcbb/dist/index.html)
+[To-do List](https://rawcdn.githack.com/martinnajjar12/to-do-list/16945b0422f16ccbee1d7b9043c28c96c10e4762/dist/index.html)
 
 ## Getting Started
 
