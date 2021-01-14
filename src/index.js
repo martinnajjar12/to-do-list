@@ -99,7 +99,7 @@ const editTodoTitle = document.querySelector('#editTodoTitle');
 const editTodoDesc = document.querySelector('#editTodoDesc');
 const editTodoDate = document.querySelector('#editTodoDate');
 const editTodoPriority = document.querySelector('#editTodoPriority');
-const editTodoProject = document.querySelector('#editTodoProjectSelection');
+const editTodoProject = document.querySelector('#projectId');
 const editTodoNotes = document.querySelector('#editTodoNotes');
 const todoId = document.querySelector('#todoId');
 const editElems = {
@@ -183,19 +183,6 @@ function findCurrentTodo(todos, todoId) {
   return todos[currentTodoIndex];
 }
 
-const updateTodo = () => {
-  const todosArray = todoArrayOf(editElems.projectInput.value).todos;
-  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
-  currentTodo.date = editElems.dateInput.value;
-  currentTodo.description = editElems.descInput.value;
-  currentTodo.notes = editElems.notesInput.value;
-  currentTodo.priority = editElems.priorityInput.value;
-  currentTodo.project = editElems.projectInput.value;
-  currentTodo.title = editElems.titleInput.value;
-  editModalDiv.classList.remove('modal-bg-active');
-  saveLocal();
-};
-
 const createTodo = () => {
   const newTodo = new Todo(
     todoTitle.value,
@@ -223,6 +210,17 @@ const createTodo = () => {
 
 createTodoBtn.addEventListener('click', createTodo);
 
+const updateTodo = () => {
+  const todosArray = todoArrayOf(editElems.projectInput.value).todos;
+  const currentTodo = findCurrentTodo(todosArray, editElems.todoIdInput.value);
+  currentTodo.date = editElems.dateInput.value;
+  currentTodo.description = editElems.descInput.value;
+  currentTodo.notes = editElems.notesInput.value;
+  currentTodo.priority = editElems.priorityInput.value;
+  currentTodo.title = editElems.titleInput.value;
+  editModalDiv.classList.remove('modal-bg-active');
+  saveLocal();
+};
 // Edit a To-Do
 
 const editTodoBtn = document.querySelector('#editTodoBtn');

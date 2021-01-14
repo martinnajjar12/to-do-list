@@ -6,7 +6,6 @@ function editTodo() {
   const desc = document.createElement('input');
   const date = document.createElement('input');
   const priority = document.createElement('select');
-  const projectSelection = document.createElement('select');
   const notes = document.createElement('input');
   const id = document.createElement('input');
   const heading = document.createElement('h5');
@@ -17,6 +16,7 @@ function editTodo() {
   const div = document.createElement('div');
   const deleteTodoBtn = document.createElement('button');
   const btnCont = document.createElement('div');
+  const project = document.createElement('input');
 
   heading.textContent = 'Edit To Do';
   heading.className = 'w-75 mx-auto d-block';
@@ -55,6 +55,9 @@ function editTodo() {
   id.setAttribute('type', 'hidden');
   id.setAttribute('id', 'todoId');
 
+  project.setAttribute('type', 'hidden');
+  project.setAttribute('id', 'projectId');
+
   button.textContent = 'Update Todo';
   button.className = 'btn btn-primary d-block';
   button.setAttribute('id', 'editTodoBtn');
@@ -68,17 +71,6 @@ function editTodo() {
   btnCont.className = 'mb-3 w-75 mx-auto d-flex justify-content-around';
   btnCont.append(button, deleteTodoBtn);
 
-  const projects = JSON.parse(localStorage.getItem('projects'));
-  if (projects != null) {
-    projects.forEach((project) => {
-      const proj = document.createElement('option');
-      proj.text = project.name;
-      projectSelection.add(proj);
-    });
-  }
-  projectSelection.className = 'form-select mb-3 w-75 mx-auto d-block';
-  projectSelection.setAttribute('id', 'editTodoProjectSelection');
-
   form.append(
     heading,
     title,
@@ -86,9 +78,9 @@ function editTodo() {
     date,
     priority,
     notes,
-    projectSelection,
     btnCont,
     id,
+    project,
   );
 
   // Modal
