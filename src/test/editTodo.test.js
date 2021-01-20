@@ -1,7 +1,7 @@
-import { editTodo } from '../scripts/editTodo';
+import editTodo from '../scripts/editTodo';
 
 describe('editTodo', () => {
-  it('does nothing', () => {
-    expect(1 + 2).toEqual(3);
+  it('should return a HTML Object', () => {
+    expect(typeof editTodo).toBe('object');
   });
 });
