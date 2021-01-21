@@ -63,6 +63,14 @@ Use these scripts to compile your work.
     npm run watch
 ```
 
+### Tests
+
+To test the project run the following command.
+
+```
+    npm run test
+```
+
 ## Authors
 
 👤 **Steven Jack Chung**
@@ -81,7 +89,7 @@ Use these scripts to compile your work.
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/jcy2704/library/issues).
+Feel free to check the [issues page](https://github.com/martinnajjar12/to-do-list/issues).
 
 ## Show your support
 
