@@ -10,6 +10,12 @@
     "watch": "webpack --watch",
     "development": "webpack --mode development"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/martinnajjar12/to-do-list.git"
@@ -34,6 +40,7 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "style-loader": "^2.0.0",
     "webpack": "^5.12.3",
