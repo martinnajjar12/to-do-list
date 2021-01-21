@@ -56,7 +56,7 @@ function todoForm() {
 
   const projects = JSON.parse(localStorage.getItem('projects'));
   if (projects != null) {
-    projects.forEach((project) => {
+    projects.forEach(project => {
       const proj = document.createElement('option');
       proj.text = project.name;
       projectSelection.add(proj);
