@@ -68,7 +68,7 @@ Use these scripts to compile your work.
 To test the project run the following command.
 
 ```
-    npm run test
+    npm test
 ```
 
 ## Authors
