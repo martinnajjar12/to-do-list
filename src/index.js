@@ -65,7 +65,7 @@ function saveLocal() {
   localStorage.setItem('projects', JSON.stringify(projects));
 }
 
-const createProject = (name) => {
+const createProject = name => {
   const newProject = new Project(name);
   projects.push(newProject);
   row.appendChild(projectCard(newProject.name));
@@ -112,19 +112,23 @@ const editElems = {
   todoIdInput: todoId,
 };
 
-const renderTodos = (project) => {
+const renderTodos = project => {
   const projectName = project.name.replace(/ |\/|_|'/g, '-');
   const todoList = document.querySelector(`#${projectName}Todo`);
   todoList.innerHTML = '';
   const todoArray = project.todos;
-  todoArray.forEach((todo) => {
+  todoArray.forEach(todo => {
     const li = document.createElement('li');
     checkboxId += 1;
 
     if (todo.finished) {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${todo.title} ${todo.date}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3' checked><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}' style='text-decoration: line-through'>${
+        todo.title
+      } ${todo.date}</span>`;
     } else {
-      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${todo.title} ${todo.date}</span>`;
+      li.innerHTML = `<input type='checkbox' id='${projectName}${checkboxId}' class='me-3'><span class='${todo.priority.toLowerCase()}' id='span${projectName}${checkboxId}'>${
+        todo.title
+      } ${todo.date}</span>`;
     }
 
     todoList.appendChild(li);
@@ -154,7 +158,7 @@ function restoreLocal() {
     createProject('default');
   } else {
     resetRow();
-    projects.forEach((project) => {
+    projects.forEach(project => {
       checkboxId = 0;
       const newProject = projectCard(project.name);
       row.appendChild(newProject);
@@ -179,7 +183,7 @@ function todoArrayOf(project) {
 }
 
 function findCurrentTodo(todos, todoId) {
-  const currentTodoIndex = todos.findIndex((obj) => obj.id == todoId);
+  const currentTodoIndex = todos.findIndex(obj => obj.id == todoId);
   return todos[currentTodoIndex];
 }
 
@@ -246,7 +250,7 @@ deleteTodoBtn.addEventListener('click', () => {
 restoreLocal();
 
 if (projects != null) {
-  projects.forEach((project) => {
+  projects.forEach(project => {
     projectNameArray.push(project.name);
   });
 }
